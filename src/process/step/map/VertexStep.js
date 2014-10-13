@@ -11,16 +11,19 @@ function VertexStep(traversal, returnClass, direction, branchFactor, edgeLabels)
   this.branchFactor = branchFactor;
   this.returnClass = returnClass;
 
+  var self = this;
+
   if (returnClass === Vertex) {
     console.log('==setting function from VertexStep==');
     this.setFunction(function(traverser) {
-      var vertices = traverser.get().iterators().vertices(this.direction, this.branchFactor, this.edgeLabels);
+      var element = traverser.get();
+      var vertices = element.getIterators().vertices(self.direction, self.branchFactor, self.edgeLabels, element);
 
       return vertices;
     });
   } else { // edges
     this.setFunction(function(traverser) {
-      return traverser.get().iterators().edges(this.direction, this.branchFactor, this.edgeLabels);
+      return traverser.get().getIterators().edges(self.direction, self.branchFactor, self.edgeLabels);
     });
   }
 }

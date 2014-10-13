@@ -31,13 +31,12 @@ DefaultStrategies.prototype.unregister = function(optimizerClass) {
 };
 
 DefaultStrategies.prototype.applyAll = function() {
-  console.log('==DefaultStrategies.applyAll()==');
+  // console.log('==DefaultStrategies.applyAll()==');
   if (!this.complete) {
     var self = this;
     this.complete = true;
     this.traversalStrategies = this.traversalStrategies.sort(); //todo: debug and improve with https://github.com/tinkerpop/tinkerpop3/blob/master/gremlin-core/src/main/java/com/tinkerpop/gremlin/process/TraversalStrategy.java#L23
     this.traversalStrategies.forEach(function(traversalStrategy) {
-      console.log('@@', traversalStrategy.constructor.name);
       traversalStrategy.apply(self.traversal);
     });
   }

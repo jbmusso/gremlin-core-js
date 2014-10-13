@@ -46,59 +46,65 @@ DefaultTraversal.prototype.addStarts = function(starts) {
   TraversalHelper.getStart(this).addStarts(starts);
 };
 
-// DefaultTraversal.prototype.hasNext = function() {
-//   console.log('==DefaultTraversal.hasNext()==');
-
-//   // this.applyStrategies(); //todo: ok, but uncomment
-
-//   var endStep = TraversalHelper.getEnd(this);
-
-//   console.log('------------------', endStep.constructor.name);
-//   var next = endStep.next();
-//   var hasNext = this.lastEndCount > 0 || endStep.hasNext();
-
-//   console.log('---(((((((((', hasNext);
-
-//   return hasNext;
-// };
-
 DefaultTraversal.prototype.next = function() {
+  console.log('==@@ DefaultTraversal.next() @@==');
+  var lastEnd;
+  var endStep;
+  var next;
+  var traverser;
+  var element;
+
   this.applyStrategies();
 
+  console.log('  - begin fetching next traversal data');
   if (this.lastEndCount > 0) {
     this.lastEndCount--;
-    return this.lastEnd;
-  } else {
+    lastEnd = this.lastEnd;
 
-    var nextTraverser = TraversalHelper.getEnd(this).next().value;
-    // console.log(lastStep);
-    // var nextValue = lastStep.next();
-    if (nextTraverser.getBulk() === 1) {
-      var ret = nextTraverser.get();
-      return ret;
-    } else {
-      this.lastEndCount = nextTraverser.getBulk() - 1;
-      this.lastEnd = next.get();
-      return this.lastEnd;
+    return lastEnd;
+  } else {
+    console.log('     - Grabbing last (end) step');
+    endStep = TraversalHelper.getEnd(this);
+    console.log('     - Done: ', endStep.constructor.name, 'end step');
+
+    console.log('     - Grabbing next traverser for Step');
+    next = endStep.next();
+
+    console.log('     - Done: grabbed something');
+    // console.log(next);
+
+    if (next.done) {
+      // Reached end of iteration, exit
+      return { value: undefined, done: true };
     }
 
+    // Otherwise, handle retrieved value
+    traverser = next.value;
+
+    // console.log(traverser.get());
+
+    if (traverser.getBulk() === 1) {
+      element = traverser.get();
+
+      return { value: element, done: false };
+    } else {
+      this.lastEndCount = traverser.getBulk() - 1;
+      this.lastEnd = next.get();
+      lastEnd = this.lastEnd;
+
+      return { value: lastEnd, done: false };
+    }
   }
-
-  // console.log(nextTraverser);
-  // var next = {
-  //   value: nextValue,
-  //   done: !nextValue
-  // };
-
-  // return next;
 };
 
 //...
 
 DefaultTraversal.prototype.applyStrategies = function() {
+  console.log('  - applying strategies');
   if (!this.strategies.complete) {
     this.strategies.applyAll();
   }
+  console.log('  - done applying strategies');
 };
 
 DefaultTraversal.prototype.clone = function() {

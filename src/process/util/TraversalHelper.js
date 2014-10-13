@@ -10,7 +10,7 @@ function TraversalHelper() {
 
 
 TraversalHelper.isLabeled = function(step) {
-  console.log('==TraversalHelper.isLabeled==');
+  // console.log('==TraversalHelper.isLabeled==');
 
   var label = _.isString(step) ? step : step.getLabel();
   var isLabeled = GraphKey.isHidden(label);
@@ -22,6 +22,10 @@ TraversalHelper.getStart = function(traversal) {
   return traversal.getSteps()[0];
 };
 
+/**
+ * @param {Traversal} traversal
+ * @returns {Step}
+ */
 TraversalHelper.getEnd = function(traversal) {
   var steps = traversal.getSteps();
 
@@ -65,7 +69,7 @@ TraversalHelper.reLinkSteps = function(traversal) {
 };
 
 TraversalHelper.trackPaths = function(traversal) {
-  console.log('==TraversalHelper.trackPaths()==');
+  // console.log('==TraversalHelper.trackPaths()==');
 
   var steps = traversal.getSteps();
 

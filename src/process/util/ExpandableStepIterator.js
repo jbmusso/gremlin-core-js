@@ -10,31 +10,26 @@ function ExpandableStepIterator(hostStep) {
   this.hostStep = hostStep;
 }
 
-ExpandableStepIterator.prototype.hasNext = function() {
-  // throw new Error('-..............');
-  console.log('==ExpandableStepIterator.hasNext()==');
-  return !this.traverserSet.isEmpty() || this.hostStep.getPreviousStep().hasNext();
-};
-
 ExpandableStepIterator.prototype.next = function() {
-  console.log('==ExpandableStepIterator.next()==');
+  console.log('    - ExpandableStepIterator.next()==');
   var next;
+  var i = 0;
+  var previousStep;
+  var traverser;
 
   if (!this.traverserSet.isEmpty()) {
-    next = {
-      value: this.traverserSet.remove(),
-      done: false
-    };
+    next = { value: this.traverserSet.remove(), done: false };
 
     return next;
   }
 
-  next = this.hostStep.getPreviousStep().next();
+  previousStep = this.hostStep.getPreviousStep();
+  next = previousStep.next();
 
   if (!next.done) {
     return next;
   } else {
-    var traverser = this.traverserSet.remove();
+    traverser = this.traverserSet.remove();
 
     next = {
       value: traverser,
@@ -45,15 +40,22 @@ ExpandableStepIterator.prototype.next = function() {
   }
 };
 
+/**
+ * Given a (Traverser?)Iterator, add all traversers to this.traverserSet
+ */
 ExpandableStepIterator.prototype.add = function(iterator) {
-  console.log('==ExpandableStepIterator.add== !!!!!!!!!!!!!');
+  console.log('==ExpandableStepIterator.add==');
+  var cur;
 
-  var cur = iterator.next().value;
-
-  //TODO: add for..of loop as replacement for forEachRemaining
-  // while (!iterator.next().done) {
-  this.traverserSet.add(cur);
-  // }
+  while (true) { // todo: replace with for..of loop?
+    cur = iterator.next();
+    if (!cur.done) {
+      console.log('             - adding something', cur.value.constructor.name);
+      this.traverserSet.add(cur.value);
+    } else {
+      break;
+    }
+  }
 };
 
 ExpandableStepIterator.prototype.clear = function() {

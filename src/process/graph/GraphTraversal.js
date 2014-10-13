@@ -26,8 +26,11 @@ GraphTraversal.of = function(graph) {
   return traversal;
 };
 
+/**
+ * @return {Traversal}
+ */
 GraphTraversal.prototype.addStep = function(step) {
-  console.log("==GraphTraversal.addStep==", step.constructor.name);
+  // console.log("==GraphTraversal.addStep==", step.constructor.name);
   var traversal = Traversal.prototype.addStep.call(this, step);
 
   return traversal;
@@ -52,18 +55,21 @@ GraphTraversal.prototype.flatMap = function(fn) {
   console.log('==GraphTraversal.flatMap()==');
   var flatMapStep = new FlatMapStep(this);
   flatMapStep.setFunction(fn);
+
   return this.addStep(flatMapStep);
 };
 
 GraphTraversal.prototype.to = function(direction, branchFactor, edgeLabels) {
-  if (!_.isNumber(branchFactor)) {
+  if (_.isNumber(branchFactor)) {
     edgeLabels = _.rest(arguments, 2);
-    branchFactor = Number.MAX_SAFE_INTEGER;
   } else {
     edgeLabels = _.rest(arguments, 1);
+    branchFactor = Number.MAX_SAFE_INTEGER;
   }
 
-  return this.addStep(new VertexStep(this, Vertex, direction, branchFactor, edgeLabels));
+  var traversal = this.addStep(new VertexStep(this, Vertex, direction, branchFactor, edgeLabels));
+
+  return traversal;
 };
 
 GraphTraversal.prototype.out = function(edgeLabels) {

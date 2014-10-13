@@ -31,12 +31,12 @@ AbstractStep.prototype.reset = function() {
 };
 
 AbstractStep.prototype.addStarts = function(starts) {
-  console.log('==AbstractStep.addStarts==');
+  // console.log('==AbstractStep.addStarts==');
   this.starts.add(starts);
 };
 
 AbstractStep.prototype.setPreviousStep = function(step) {
-  console.log('==AbstractStep.setPreviousStep==');
+  // console.log('==AbstractStep.setPreviousStep==');
   this.previousStep = step;
 };
 
@@ -62,55 +62,60 @@ AbstractStep.prototype.getLabel = function() {
 
 AbstractStep.prototype.next = function() {
   console.log('==AbstractStep.next()==', this.constructor.name);
-  var next = {};
+  var next;
 
-  if (this.available) {
-    this.available = false;
-    this.prepareTraversalForNextStep(this.nextEnd);
+  if (this.hasNext()) {
+    if (this.available) {
+      this.available = false;
+      this.prepareTraversalForNextStep(this.nextEnd);
 
-    next = {
-      value: this.nextEnd,
-      done: !this.nextEnd
-    };
+      next = {
+        value: this.nextEnd,
+        done: !this.nextEnd
+      };
 
+      return next;
+
+    } else {
+      var traverser = this.processNextStart();
+
+      while (true) {
+        if (traverser.getBulk() !== 0) {
+          this.prepareTraversalForNextStep(traverser);
+          next = {
+            value: traverser,
+            done: !traverser
+          };
+          return next;
+        }
+      }
+    }
   } else {
-    var traverser = this.processNextStart();
-    this.prepareTraversalForNextStep(traverser);
-
-    next = {
-      value: traverser,
-      done: !traverser
-    };
+    return { value: undefined, done: true };
   }
-
-  return next;
 };
 
-// AbstractStep.prototype.hasNext = function() {
-//   console.log('@==AbstractStep.hasNext==/', this.constructor.name);
-//   console.log(this.available);
+AbstractStep.prototype.hasNext = function() {
+  if (this.available) {
+    return true;
+  } else {
+    var traverser = this.processNextStart();
 
-//   if (this.available) {
-//     return true;
-//   }
-//   else {
-//     // console.log('&&&&&&&&&&&&&');
-//     // console.log();
-//     // this.processNextStart();
-//     // console.log(;
-//     var nextStart = this.processNextStart();
-//     // console.log(nextStart);
+    if (traverser) {
+      while (true) {
+        this.nextEnd = traverser;
+        if (this.nextEnd.getBulk() !== 0) {
+          this.available = true;
+          return true;
+        }
 
-//     // try {
-//     //   this.nextEnd = this.processNextStart();
-//     //   this.available = true;
-//     //   return true;
-//     // } catch (e) { //todo: handle flow w/o error but w/ iterator?
-//     //   this.available = false;
-//     //   return false;
-//     // }
-//   }
-// };
+      }
+    } else {
+      this.available = false;
+      return false;
+    }
+  }
+};
 
 AbstractStep.prototype.getTraversal = function() {
   return this.traversal;
@@ -125,7 +130,7 @@ AbstractStep.prototype.processNextStart = function() {
 };
 
 AbstractStep.prototype.prepareTraversalForNextStep = function(traverser) {
-  console.log('==prepareTraversalForNextStep==');
+  console.log('==AbstractStep.prepareTraversalForNextStep==', this.constructor.name);
 
   if (!this.futureSetByChild) {
     traverser.setFuture(this.nextStep.getLabel());

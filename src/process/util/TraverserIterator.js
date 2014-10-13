@@ -2,42 +2,36 @@ var SimpleTraverser = require('../SimpleTraverser');
 
 
 function TraverserIterator(step, trackPaths, iterator) {
+  console.log('==TraverserIterator.constructor()==');
   this.iterator = iterator;
   this.step = step;
   this.trackPaths = trackPaths;
 }
 
-TraverserIterator.prototype.hasNext = function() {
-  console.log('==TraverserIterator.hasNext==');
+// TraverserIterator.prototype.hasNext = function() {
+//   console.log('==TraverserIterator.hasNext==');
 
-  return this.iterator.hasNext();
-};
+//   return this.iterator.hasNext();
+// };
 
 TraverserIterator.prototype.next = function() {
   var traverser;
-  console.log('==TraverserIterator.next()==');
+  console.log('    - TraverserIterator.next()==');
 
   var next = this.iterator.next();
-  var nextValue = next.value;
-  var isDone = next.done;
   var sideEffects = this.step.getTraversal().getSideEffects();
 
-  // console.log(nextValue);
+  if (!next.done) {
+    if (this.trackPaths) {
+      traverser = new PathTraverser(this.step.getLabel(), next.value, sideEffects);
+    } else {
+      traverser = new SimpleTraverser(next.value, sideEffects);
+    }
 
-  if (this.trackPaths) {
-    traverser = new PathTraverser(this.step.getLabel(), nextValue, sideEffects);
-  } else {
-    traverser = new SimpleTraverser(nextValue, sideEffects);
+    return { value: traverser, done: next.done };
   }
 
-  // console.log('---------');
-  // console.log(traverser.cosntructor.name);
-  // console.log(traverser);
-
-  return {
-    value: traverser,
-    done: isDone
-  };
+  return { value: undefined, done: true };
 };
 
 module.exports = TraverserIterator;

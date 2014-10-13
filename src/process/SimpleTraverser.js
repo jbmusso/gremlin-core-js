@@ -5,6 +5,10 @@ var Traverser = require('./Traverser');
 function SimpleTraverser(t, sideEffects) { // class, impl. Traverser & Traverser.Admin
   this.loops = 0;
 
+  if (!t) {
+    throw new Error('SimpleTraverser must have a reference to an element');
+  }
+
   this.t = t;
   this.sideEffects = sideEffects;
   this.bulk = 1;

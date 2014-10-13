@@ -13,12 +13,11 @@ inherits(GraphStandardStrategy, TraversalStrategy);
 
 
 GraphStandardStrategy.prototype.apply = function(traversal) {
-  console.log('==GraphStandardStrategy.apply()==');
+  // console.log('==GraphStandardStrategy.apply()==');
   _(traversal.getSteps())
     .filter(function(step) {
       console.log(' *', step.constructor.name);
       var isEngineDependent = !!step.Engine && !!step.onEngine && typeof step.onEngine === 'function'; // duck typing, replaces instanceof EngineDependent
-      console.log(isEngineDependent);
       return isEngineDependent;
     })
     .forEach(function(step) {

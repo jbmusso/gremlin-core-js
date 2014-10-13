@@ -5,7 +5,7 @@ var Set = require('collections/set');
 
 
 function TraverserSet() {
-  console.log('==TraverserSet.constructor==');
+  // console.log('==TraverserSet.constructor==');
   Set.call(this);
   this.map = new Map();
 }
@@ -29,7 +29,7 @@ TraverserSet.prototype.contains = function(traverser) {
 };
 
 TraverserSet.prototype.add = function(traverser) {
-  console.log('==TraverserSet.add==');
+  // console.log('==TraverserSet.add==');
   var existing = this.map.get(traverser);
 
   if (!existing) {
@@ -45,10 +45,13 @@ TraverserSet.prototype.offer = function(traverser) {
   return this.add(traverser);
 };
 
+/**
+ * @returns {Traverser|Boolean}
+ */
 TraverserSet.prototype.remove = function(traverser) {
-  console.log('==TraverserSet.remove()==');
+  // console.log('==TraverserSet.remove()==', traverser);
   if (traverser) {
-    return this.map.delete(traverser) !== null;
+    return this.map.delete(traverser); // returns true if removed
   } else {
     var nextValue = this.iterator().next().value;
     this.map.delete(nextValue);

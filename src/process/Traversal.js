@@ -39,20 +39,19 @@ Traversal.prototype.next = function(amount) {
 };
 
 Traversal.prototype.forEach = function(consumer) {
-  console.log('==Traversal.forEach==', consumer);
+  console.log('================Traversal.forEach================');
 
-  var next = this.next();
-  // console.log(next);
-  consumer(next);
-  // console.log(this.next());
-  // try {
-  //   while (this.hasNext()) {
-  //     consumer(this.next());
-  //   }
+  var cur;
 
-  // } catch(e) {
-  //   console.log(e.stack);
-  // }
+  while (true) {
+    cur = this.next();
+
+    if (!cur.done) {
+      consumer(cur.value);
+    } else {
+      break;
+    }
+  }
 };
 
 // STRATEGIES
@@ -114,7 +113,6 @@ Traversal.SideEffects.prototype = {
   },
 
   setGraph: function(graph) {
-    console.log('==SideEffects.setGraph==');
     var key = GraphKey.hide('g', graph);
     this.set(key, graph);
   },

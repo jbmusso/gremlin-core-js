@@ -20,8 +20,8 @@ Vertex.prototype.addEdge = function(label, inVertex, keyValues) {
 };
 
 Vertex.prototype.property = function(key, value, keyValues) {
-  // console.log('========', key, value, keyValues);
-  // todo: add setProperty / getProperty ?
+  // todo: add setProperty / getProperty methods ?
+
   if (!value && !keyValues) { // todo: improve check
     if (GraphKey.isHidden(key)) {
       iterator = this.iterators().hiddens(Graph.Key.unHide(key));

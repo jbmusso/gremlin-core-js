@@ -15,44 +15,45 @@ FlatMapStep.prototype.setFunction = function(fn) {
   this.fn = fn;
 };
 
+/**
+ * @return {Traverser}
+ */
 FlatMapStep.prototype.processNextStart = function() {
-  console.log('==', this.constructor.name, 'processNextStart()===');
+  console.log('==FlatMapStep.processNextStart()==', this.constructor.name);
   var traverser;
 
   while (true) {
-    try {
-      traverser = this.getNext();
-    } catch(e) {
-      console.log('ERROR', e, e.stack);
-    }
-    console.log('--traverser', traverser);
+    traverser = this.getNext();
 
-    if (traverser) {
+
+    if (traverser) { //ok
       return traverser;
     }
   }
 };
 
+/**
+ * @return {Traverser}
+ */
 FlatMapStep.prototype.getNext = function() {
-  console.log('==', this.constructor.name, 'getNext()');
-  if (!this.iterator) {
-    console.log('--no iterator', this.starts.constructor.name);
-    var expandableStepIterator = this.starts;
+  console.log('==FlatMapStep.getNext()==', this.constructor.name);
 
-    var traverser;
-    try {
-      traverser = expandableStepIterator.next();
-    } catch (e) {
-      // console.log(e);
+  var traverser;
+  var itty;
+  var next;
 
-    }
+  if (this.iterator === null) {
+    traverser = this.starts.next().value; // starts === ExpandableStepIterator
 
-    console.log('...........', traverser);
-    this.iterator = new FlatMapTraverserIterator(traverser, this, this.fn(traverser));
+    itty = this.fn(traverser);
+
+    this.iterator = new FlatMapStep.FlatMapTraverserIterator(traverser, this, itty);
     return null;
   } else {
-    if (this.iterator.hasNext()) {
-      return this.iterator.next();
+    next = this.iterator.next();
+
+    if (!next.done) {
+      return next.value;
     } else {
       this.iterator = null;
       return null;
@@ -66,20 +67,24 @@ FlatMapStep.prototype.reset = function() {
 };
 
 
-FlatMapStep.FlatMapTraverserIterator = FlatMapTraverserIterator;
-
-function FlatMapTraverserIterator(head, step, iterator) {
+FlatMapStep.FlatMapTraverserIterator = function(head, step, iterator) {
   this.head = head;
   this.step = step;
   this.iterator = iterator;
-}
-
-FlatMapTraverserIterator.prototype.hasNext = function() {
-  return this.iterator.hasNext();
 };
 
-FlatMapTraverserIterator.prototype.next = function() {
-  return this.head.makeChild(this.step.getLabel(), this.iterator.next());
+FlatMapStep.FlatMapTraverserIterator.prototype.next = function() {
+  console.log('==FlatMapTraverserIterator.next()==');
+  var label = this.step.getLabel();
+  var next = this.iterator.next();
+  var child = this.head.makeChild(label, next);
+
+  var ret = {
+    value: child,
+    done: next.done // equivalent to !!child
+  };
+
+  return ret;
 };
 
 

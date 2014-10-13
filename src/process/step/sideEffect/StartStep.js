@@ -33,11 +33,8 @@ StartStep.prototype.generateTraverserIterator = function(trackPaths) {
 
     if (typeof this.start.next === 'function') { // mimic check for instanceof Iterator
       var iterator = new TraverserIterator(this, trackPaths, this.start);
-      console.log('-----');
-      // console.log(this.start.constructor.name);
-      // console.log(this.start.next.toString());
-      // console.log(iterator.constructor.name);
-      // console.log(iterator.iterator.constructor.name, '-------------');
+
+      console.log(' -- adding a TraverserIterator instance to StartStep');
       this.starts.add(iterator);
     } else {
       var traverser = trackPaths ? new PathTraverser(this.getLabel(), this.start, this.traversal.getSideEffects()) : new SimpleTraverser(this.start, this.traversal.getSideEffects());

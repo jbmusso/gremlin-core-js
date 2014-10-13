@@ -14,10 +14,15 @@ SideEffectStep.prototype.setConsumer = function(consumer) {
   this.consumer = consumer;
 };
 
+/**
+ * @return {Traverser}
+ */
 SideEffectStep.prototype.processNextStart = function() {
-  console.log('==SideEffectStep.processNextStart==');
-  var nextTraverser = this.starts.next();
+  console.log('  - SideEffectStep.processNextStart==', this.constructor.name);
+  var nextTraverser = this.starts.next(); // this.starts === ExpandableStepIterator
+
   var traverser = nextTraverser.value;
+
 
   if (this.consumer) {
     this.consumer.accept(traverser);
