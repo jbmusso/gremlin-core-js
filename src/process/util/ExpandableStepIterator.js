@@ -49,6 +49,7 @@ ExpandableStepIterator.prototype.add = function(iterator) {
 
   while (true) { // todo: replace with for..of loop?
     cur = iterator.next();
+
     if (!cur.done) {
       console.log('             - adding something', cur.value.constructor.name);
       this.traverserSet.add(cur.value);

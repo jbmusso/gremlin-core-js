@@ -39,7 +39,8 @@ Traversal.prototype.next = function(amount) {
 };
 
 Traversal.prototype.forEach = function(consumer) {
-  console.log('================Traversal.forEach================');
+  console.log('==Traversal.forEach(==');
+  console.log('==============starting for each loop=================');
 
   var cur;
 

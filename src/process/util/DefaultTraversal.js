@@ -71,7 +71,6 @@ DefaultTraversal.prototype.next = function() {
     next = endStep.next();
 
     console.log('     - Done: grabbed something');
-    // console.log(next);
 
     if (next.done) {
       // Reached end of iteration, exit
@@ -80,8 +79,6 @@ DefaultTraversal.prototype.next = function() {
 
     // Otherwise, handle retrieved value
     traverser = next.value;
-
-    // console.log(traverser.get());
 
     if (traverser.getBulk() === 1) {
       element = traverser.get();

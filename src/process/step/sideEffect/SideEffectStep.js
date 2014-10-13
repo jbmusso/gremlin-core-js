@@ -21,6 +21,11 @@ SideEffectStep.prototype.processNextStart = function() {
   console.log('  - SideEffectStep.processNextStart==', this.constructor.name);
   var nextTraverser = this.starts.next(); // this.starts === ExpandableStepIterator
 
+  // console.log(nextTraverser, '@@@@@@@@@');
+  if (nextTraverser.done) {
+    throw new Error('processNextStart should not handle a missing value');
+  }
+
   var traverser = nextTraverser.value;
 
 

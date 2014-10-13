@@ -77,12 +77,26 @@ FlatMapStep.FlatMapTraverserIterator.prototype.next = function() {
   console.log('==FlatMapTraverserIterator.next()==');
   var label = this.step.getLabel();
   var next = this.iterator.next();
-  var child = this.head.makeChild(label, next);
+  var value = next.value;
+  var child;
+  var ret;
 
-  var ret = {
-    value: child,
-    done: next.done // equivalent to !!child
-  };
+  if (!next.done) {
+    child = this.head.makeChild(label, value);
+    ret = { value: child, done: false };
+
+    return ret;
+  } else {
+    return next; // exit loop
+  }
+
+
+
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+  console.log(ret);
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
 
   return ret;
 };

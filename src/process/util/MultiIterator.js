@@ -48,12 +48,6 @@ MultiIterator.prototype.next = function() {
 
     return cur;
   }
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-      // console.log(cur.done);
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-
   return {
     value: undefined,
     done: true

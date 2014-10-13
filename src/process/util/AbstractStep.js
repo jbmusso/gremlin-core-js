@@ -64,58 +64,54 @@ AbstractStep.prototype.next = function() {
   console.log('==AbstractStep.next()==', this.constructor.name);
   var next;
 
-  if (this.hasNext()) {
-    if (this.available) {
-      this.available = false;
-      this.prepareTraversalForNextStep(this.nextEnd);
-
-      next = {
-        value: this.nextEnd,
-        done: !this.nextEnd
-      };
-
-      return next;
-
-    } else {
-      var traverser = this.processNextStart();
-
-      while (true) {
-        if (traverser.getBulk() !== 0) {
-          this.prepareTraversalForNextStep(traverser);
-          next = {
-            value: traverser,
-            done: !traverser
-          };
-          return next;
-        }
-      }
-    }
-  } else {
-    return { value: undefined, done: true };
-  }
-};
-
-AbstractStep.prototype.hasNext = function() {
   if (this.available) {
-    return true;
+    this.available = false;
+    this.prepareTraversalForNextStep(this.nextEnd);
+
+    next = {
+      value: this.nextEnd,
+      done: !this.nextEnd
+    };
+
+    return next;
+
   } else {
     var traverser = this.processNextStart();
 
-    if (traverser) {
-      while (true) {
-        this.nextEnd = traverser;
-        if (this.nextEnd.getBulk() !== 0) {
-          this.available = true;
-          return true;
-        }
-
+    while (true) {
+      if (traverser.getBulk() !== 0) {
+        this.prepareTraversalForNextStep(traverser);
+        next = {
+          value: traverser,
+          done: !traverser
+        };
+        return next;
       }
-    } else {
-      this.available = false;
-      return false;
     }
   }
 };
+
+// AbstractStep.prototype.hasNext = function() {
+//   if (this.available) {
+//     return true;
+//   } else {
+//     var traverser = this.processNextStart();
+
+//     if (traverser) {
+//       while (true) {
+//         this.nextEnd = traverser;
+//         if (this.nextEnd.getBulk() !== 0) {
+//           this.available = true;
+//           return true;
+//         }
+
+//       }
+//     } else {
+//       this.available = false;
+//       return false;
+//     }
+//   }
+// };
 
 AbstractStep.prototype.getTraversal = function() {
   return this.traversal;
