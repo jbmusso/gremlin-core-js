@@ -31,7 +31,6 @@ DefaultStrategies.prototype.unregister = function(optimizerClass) {
 };
 
 DefaultStrategies.prototype.applyAll = function() {
-  // console.log('==DefaultStrategies.applyAll()==');
   if (!this.complete) {
     var self = this;
     this.complete = true;

@@ -5,10 +5,6 @@ var Traverser = require('./Traverser');
 function SimpleTraverser(t, sideEffects) { // class, impl. Traverser & Traverser.Admin
   this.loops = 0;
 
-  if (!t) {
-    throw new Error('SimpleTraverser must have a reference to an element');
-  }
-
   this.t = t;
   this.sideEffects = sideEffects;
   this.bulk = 1;
@@ -69,6 +65,10 @@ SimpleTraverser.prototype.getBulk = function() {
 };
 
 SimpleTraverser.prototype.makeChild = function(label, r) {
+  if (!r) {
+    throw new Error('makeChild must have a reference to an element');
+  }
+
   var traverser = new SimpleTraverser(r, this.sideEffects);
   traverser.future = this.future;
   traverser.loops = this.loops;

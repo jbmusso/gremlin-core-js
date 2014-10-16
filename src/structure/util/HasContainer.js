@@ -21,9 +21,9 @@ HasContainer.prototype.test = function(element) {
       return this.predicate.test((element).key(), this.value);
     } else {
       if (element instanceof Vertex) {
-        var itty = element.iterators().properties(this.key);
-        while (itty.hasNext()) {
-          if (this.predicate.test(itty.next().value(), this.value)) {
+        var iterator = element.iterators().properties(this.key);
+        while (iterator.hasNext()) {
+          if (this.predicate.test(iterator.next().value(), this.value)) {
             return true;
           }
         }

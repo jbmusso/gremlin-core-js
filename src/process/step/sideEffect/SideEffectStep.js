@@ -15,32 +15,27 @@ SideEffectStep.prototype.setConsumer = function(consumer) {
 };
 
 /**
- * @return {Traverser}
+ * @return {value/done}
  */
 SideEffectStep.prototype.processNextStart = function() {
-  console.log('  - SideEffectStep.processNextStart==', this.constructor.name);
-  var nextTraverser = this.starts.next(); // this.starts === ExpandableStepIterator
+  var nextTraverser = this.starts.next(); // this.starts === is an instanceof ExpandableStepIterator
+  var traverser;
 
-  var traverser = nextTraverser.value;
+  if (!nextTraverser || nextTraverser.done) { // equivalent of catching an error which this.starts.next() may throw in the Java source
+    // maybe this should be made more abstract and moved to the parent (calling) function
+    // throw new Error('processNextStart should not handle a missing value');
+    // the !nextTraverser check may not be required
 
+    return { value: undefined, done: true };
+  }
+
+  traverser = nextTraverser.value;
 
   if (this.consumer) {
     this.consumer.accept(traverser);
   }
 
-  return traverser;
-};
-
-SideEffectStep.addToCollection = function(collection, s, bulk) {
-  if (collection instanceof BulkList) {
-    collection.add(s, bulk);
-  } else if (collection instanceof Set) {
-    collection.add(s); //todo: add Set class
-  } else {
-    for (var i = 0; i < bulk.length; i++) {
-      collection.add(s);
-    }
-  }
+  return { value: traverser, done: false };
 };
 
 module.exports = SideEffectStep;

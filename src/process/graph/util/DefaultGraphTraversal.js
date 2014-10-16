@@ -7,7 +7,6 @@ var GraphTraversal = require('../graphtraversal');
 
 
 function DefaultGraphTraversal(graph) {
-  console.log("==DefaultGraphTraversal==");
   DefaultTraversal.apply(this);
   // this.getStrategies().register(UntilStrategy.instance());
   // this.getStrategies().register(DedupOptimizerStrategy.instance());

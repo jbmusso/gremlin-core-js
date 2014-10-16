@@ -30,7 +30,6 @@ GraphTraversal.of = function(graph) {
  * @return {Traversal}
  */
 GraphTraversal.prototype.addStep = function(step) {
-  // console.log("==GraphTraversal.addStep==", step.constructor.name);
   var traversal = Traversal.prototype.addStep.call(this, step);
 
   return traversal;
@@ -52,7 +51,6 @@ GraphTraversal.prototype.map = function(fn) {
 };
 
 GraphTraversal.prototype.flatMap = function(fn) {
-  console.log('==GraphTraversal.flatMap()==');
   var flatMapStep = new FlatMapStep(this);
   flatMapStep.setFunction(fn);
 

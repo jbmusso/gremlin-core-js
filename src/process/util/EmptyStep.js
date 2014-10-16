@@ -34,7 +34,7 @@ EmptyStep.prototype.setTraversal = function(traversal) {
 };
 
 EmptyStep.prototype.clone = function() {
-  // body...
+  throw new Error('Must be implemented in this class');
 };
 
 EmptyStep.prototype.getLabel = function(label) {
@@ -45,6 +45,7 @@ EmptyStep.prototype.setLabel = function(label) {
 };
 
 EmptyStep.prototype.hasNext = function() {
+  throw new Error('This should not be called');
   return false;
 };
 

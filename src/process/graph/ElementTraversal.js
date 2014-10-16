@@ -7,7 +7,6 @@ function ElementTraversal() { // extends/implements nothing
 }
 
 ElementTraversal.prototype.start = function() {
-  console.log('==ElementTraversal.start==');
   var traversal = GraphTraversal.of();
   var starStep = new StartStep(traversal, this);
 

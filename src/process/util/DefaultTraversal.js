@@ -42,12 +42,10 @@ DefaultTraversal.prototype.getStrategies = function() { // strategies()
 };
 
 DefaultTraversal.prototype.addStarts = function(starts) {
-  console.log('==DefaultTraversal.addStarts==', starts);
   TraversalHelper.getStart(this).addStarts(starts);
 };
 
 DefaultTraversal.prototype.next = function() {
-  console.log('==@@ DefaultTraversal.next() @@==');
   var lastEnd;
   var endStep;
   var next;
@@ -56,22 +54,14 @@ DefaultTraversal.prototype.next = function() {
 
   this.applyStrategies();
 
-  console.log('  - begin fetching next traversal data');
   if (this.lastEndCount > 0) {
     this.lastEndCount--;
     lastEnd = this.lastEnd;
 
     return lastEnd;
   } else {
-    console.log('     - Grabbing last (end) step');
     endStep = TraversalHelper.getEnd(this);
-    console.log('     - Done: ', endStep.constructor.name, 'end step');
-
-    console.log('     - Grabbing next traverser for Step');
     next = endStep.next();
-
-    console.log('     - Done: grabbed something');
-    // console.log(next);
 
     if (next.done) {
       // Reached end of iteration, exit
@@ -80,8 +70,6 @@ DefaultTraversal.prototype.next = function() {
 
     // Otherwise, handle retrieved value
     traverser = next.value;
-
-    // console.log(traverser.get());
 
     if (traverser.getBulk() === 1) {
       element = traverser.get();
@@ -100,11 +88,9 @@ DefaultTraversal.prototype.next = function() {
 //...
 
 DefaultTraversal.prototype.applyStrategies = function() {
-  console.log('  - applying strategies');
   if (!this.strategies.complete) {
     this.strategies.applyAll();
   }
-  console.log('  - done applying strategies');
 };
 
 DefaultTraversal.prototype.clone = function() {

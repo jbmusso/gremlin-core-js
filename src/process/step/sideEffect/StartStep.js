@@ -11,8 +11,6 @@ var TraverserSource = require('../../graph/marker/TraverserSource');
 
 
 function StartStep(traversal, start) {
-  console.log('==StartStep.constructor==');
-
   this.start = start || null;
   SideEffectStep.call(this, traversal);
 }
@@ -26,15 +24,12 @@ StartStep.prototype.clear = function() {
 };
 
 StartStep.prototype.generateTraverserIterator = function(trackPaths) {
-  console.log('==StartStep.generateTraverserIterator==');
   if (this.start !== null) { // this.start is an ElementTraversal or a VertexPropertyTraversal
     this.starts.clear();
-    // console.log(this.start);
 
     if (typeof this.start.next === 'function') { // mimic check for instanceof Iterator
       var iterator = new TraverserIterator(this, trackPaths, this.start);
 
-      console.log(' -- adding a TraverserIterator instance to StartStep');
       this.starts.add(iterator);
     } else {
       var traverser = trackPaths ? new PathTraverser(this.getLabel(), this.start, this.traversal.getSideEffects()) : new SimpleTraverser(this.start, this.traversal.getSideEffects());

@@ -8,7 +8,6 @@ var PathTraverser = require('../PathTraverser');
 var TraversalHelper = require('./TraversalHelper');
 
 function AbstractStep(traversal) {
-  console.log('==AbstractStep.constructor==');
   this.nextEnd = null;
   this.available = false;
   this.futureSetByChild = false;
@@ -24,19 +23,16 @@ function AbstractStep(traversal) {
 inherits(AbstractStep, Step);
 
 AbstractStep.prototype.reset = function() {
-  console.log('==AbstractStep.reset==');
   this.starts.clear();
   this.available = false;
   this.nextEnd = null;
 };
 
 AbstractStep.prototype.addStarts = function(starts) {
-  // console.log('==AbstractStep.addStarts==');
   this.starts.add(starts);
 };
 
 AbstractStep.prototype.setPreviousStep = function(step) {
-  // console.log('==AbstractStep.setPreviousStep==');
   this.previousStep = step;
 };
 
@@ -60,56 +56,44 @@ AbstractStep.prototype.getLabel = function() {
   return this.label;
 };
 
+/**
+ * todo: merge AbstractStep.next() with AbstractStep.hasNext()
+ */
 AbstractStep.prototype.next = function() {
-  console.log('==AbstractStep.next()==', this.constructor.name);
   var next;
 
   if (this.hasNext()) {
     if (this.available) {
       this.available = false;
+
       this.prepareTraversalForNextStep(this.nextEnd);
-
-      next = {
-        value: this.nextEnd,
-        done: !this.nextEnd
-      };
-
+      next = { value: this.nextEnd, done: false };
       return next;
-
     } else {
-      var traverser = this.processNextStart();
+      var nextTraverser = this.processNextStart();
+      this.prepareTraversalForNextStep(nextTraverser.value);
 
-      while (true) {
-        if (traverser.getBulk() !== 0) {
-          this.prepareTraversalForNextStep(traverser);
-          next = {
-            value: traverser,
-            done: !traverser
-          };
-          return next;
-        }
-      }
+      return nextTraverser;
     }
   } else {
     return { value: undefined, done: true };
   }
 };
 
+/**
+ * This method internally calls this.processNextStart() which returns a
+ * { value: Traverser, done: Boolean } object.
+ */
 AbstractStep.prototype.hasNext = function() {
   if (this.available) {
     return true;
   } else {
-    var traverser = this.processNextStart();
+    var nextStart = this.processNextStart();
 
-    if (traverser) {
-      while (true) {
-        this.nextEnd = traverser;
-        if (this.nextEnd.getBulk() !== 0) {
-          this.available = true;
-          return true;
-        }
-
-      }
+    if (!nextStart.done) {
+      this.nextEnd = nextStart.value;
+      this.available = true;
+      return true;
     } else {
       this.available = false;
       return false;
@@ -130,7 +114,13 @@ AbstractStep.prototype.processNextStart = function() {
 };
 
 AbstractStep.prototype.prepareTraversalForNextStep = function(traverser) {
-  console.log('==AbstractStep.prepareTraversalForNextStep==', this.constructor.name);
+  if (!traverser) {
+    throw new Error('Traverser cannot be undefined');
+  }
+
+  if (traverser.constructor.name === 'Object') {
+    throw new Error('This method requires something else');
+  }
 
   if (!this.futureSetByChild) {
     traverser.setFuture(this.nextStep.getLabel());

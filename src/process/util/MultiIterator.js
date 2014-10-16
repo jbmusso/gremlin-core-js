@@ -6,16 +6,10 @@ function MultiIterator(limit) {
 }
 
 MultiIterator.prototype.addIterator = function(iterator) {
-  console.log('==MultiIterator.addIterator==');
   this.iterators.push(iterator);
-  // console.log(iterator);
-  // // console.log(iterator.values().next().value.constructor.name);
-  // throw new Error();
 };
 
 MultiIterator.prototype.next = function() {
-  console.log('==MultiIterator.next==');
-
   var currentIterator;
   var cur;
 
@@ -42,18 +36,11 @@ MultiIterator.prototype.next = function() {
       if (this.current >= this.iterators.length) {
         break;
       }
-      console.log('------------------------------------>', this.current);
       currentIterator = this.iterators[this.current];
     }
 
     return cur;
   }
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-      // console.log(cur.done);
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-
   return {
     value: undefined,
     done: true

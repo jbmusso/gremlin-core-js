@@ -13,7 +13,6 @@ inherits(LabeledEndStepStrategy, TraversalStrategy);
 // _.extend(LabeledEndStepStrategy, TraversalStrategy);
 
 LabeledEndStepStrategy.prototype.apply = function(traversal) {
-  // console.log('==LabeledEndStepStrategy.apply()==');
   var step = TraversalHelper.getEnd(traversal);
 
   if (TraversalHelper.isLabeled(step)) {

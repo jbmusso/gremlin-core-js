@@ -6,60 +6,89 @@ var TraverserSet = require('./traverserset');
 
 
 function ExpandableStepIterator(hostStep) {
+  this.expander = null;
   this.traverserSet = new TraverserSet();
   this.hostStep = hostStep;
 }
 
+/**
+ * @return {value/done}
+ */
 ExpandableStepIterator.prototype.next = function() {
-  console.log('    - ExpandableStepIterator.next()==');
-  var next;
-  var i = 0;
+  var nextExpander;
+  var nextTraverser;
   var previousStep;
-  var traverser;
 
-  if (!this.traverserSet.isEmpty()) {
-    next = { value: this.traverserSet.remove(), done: false };
+  if (this.expander) {
+    nextExpander = this.expander.next();
+  }
 
-    return next;
+  if (this.expander && !nextExpander.done) {
+    return nextExpander;
   }
 
   previousStep = this.hostStep.getPreviousStep();
-  next = previousStep.next();
+  nextTraverser = previousStep.next();
 
-  if (!next.done) {
-    return next;
-  } else {
-    traverser = this.traverserSet.remove();
-
-    next = {
-      value: traverser,
-      done: !traverser
-    };
-
-    return next;
+  if (!nextTraverser) {
+    nextTraverser = { value: undefined, done: true };
   }
+
+  return nextTraverser;
 };
 
 /**
  * Given a (Traverser?)Iterator, add all traversers to this.traverserSet
  */
 ExpandableStepIterator.prototype.add = function(iterator) {
-  console.log('==ExpandableStepIterator.add==');
-  var cur;
-
-  while (true) { // todo: replace with for..of loop?
-    cur = iterator.next();
-    if (!cur.done) {
-      console.log('             - adding something', cur.value.constructor.name);
-      this.traverserSet.add(cur.value);
-    } else {
-      break;
-    }
+  if (!this.expander) {
+    this.expander = new ExpandableStepIterator.ExpandableIterator();
   }
+
+  this.expander.add(iterator);
 };
 
 ExpandableStepIterator.prototype.clear = function() {
   this.traverserSet.clear();
+};
+
+
+// ExpendableIterator
+
+ExpandableStepIterator.ExpandableIterator = function() {
+  this.queue = []; //LinkedList
+};
+
+ExpandableStepIterator.ExpandableIterator.prototype = {
+  clear: function() {
+    this.queue.length = 0;
+  },
+
+  next: function() {
+    var iterator;
+    var next;
+
+    while (true) {
+      iterator = this.queue[0]; // get head
+
+      if (iterator) {
+        next = iterator.next();
+      } else {
+        return { value: undefined, done: true };
+      }
+
+      if (!next.done) {
+        return next;
+      } else {
+        this.queue.shift(); // remove first element
+        return { value: undefined, done: true };
+      }
+    }
+  },
+
+  add: function(iterator) {
+    this.queue.push(iterator);
+  }
 };
 
 module.exports = ExpandableStepIterator;

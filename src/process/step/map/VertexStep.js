@@ -14,7 +14,6 @@ function VertexStep(traversal, returnClass, direction, branchFactor, edgeLabels)
   var self = this;
 
   if (returnClass === Vertex) {
-    console.log('==setting function from VertexStep==');
     this.setFunction(function(traverser) {
       var element = traverser.get();
       var vertices = element.getIterators().vertices(self.direction, self.branchFactor, self.edgeLabels, element);

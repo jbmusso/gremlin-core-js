@@ -39,8 +39,6 @@ Traversal.prototype.next = function(amount) {
 };
 
 Traversal.prototype.forEach = function(consumer) {
-  console.log('================Traversal.forEach================');
-
   var cur;
 
   while (true) {
@@ -118,10 +116,7 @@ Traversal.SideEffects.prototype = {
   },
 
   getGraph: function() {
-    // console.log(this, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-
     if (this.exists(GraphKey.hide('g'))) {
-      // console.log(this.get);
       return this.get(GraphKey.hide('g')); //todo check
     } else {
       throw new Error('IllegalStateException("There is no graph stored in these side effects")'); //improve

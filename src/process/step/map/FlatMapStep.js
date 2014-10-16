@@ -11,49 +11,53 @@ function FlatMapStep(traversal) {
 inherits(FlatMapStep, AbstractStep);
 
 FlatMapStep.prototype.setFunction = function(fn) {
-  console.log('==', this.constructor.name, 'setFunction()===');
   this.fn = fn;
 };
 
 /**
- * @return {Traverser}
+ * @return {value/done}
  */
 FlatMapStep.prototype.processNextStart = function() {
-  console.log('==FlatMapStep.processNextStart()==', this.constructor.name);
   var traverser;
+  var ret;
 
   while (true) {
     traverser = this.getNext();
 
-
-    if (traverser) { //ok
+    if (traverser) {
       return traverser;
     }
   }
 };
 
 /**
- * @return {Traverser}
+ * @return {value/done}
  */
 FlatMapStep.prototype.getNext = function() {
-  console.log('==FlatMapStep.getNext()==', this.constructor.name);
 
-  var traverser;
-  var itty;
   var next;
+  var nextIterator;
+  var traverser;
+  var iterator;
 
-  if (this.iterator === null) {
-    traverser = this.starts.next().value; // starts === ExpandableStepIterator
+  if (!this.iterator) {
+    nextIterator = this.starts.next(); // starts === ExpandableStepIterator
+    traverser = nextIterator.value;
 
-    itty = this.fn(traverser);
+    // Because the iterator is empty, there's
+    if (nextIterator.done) { // Mimic thrown error in Java
+      return nextIterator;
+    }
 
-    this.iterator = new FlatMapStep.FlatMapTraverserIterator(traverser, this, itty);
+    iterator = this.fn(traverser);
+
+    this.iterator = new FlatMapStep.FlatMapTraverserIterator(traverser, this, iterator);
     return null;
   } else {
     next = this.iterator.next();
 
     if (!next.done) {
-      return next.value;
+      return next;
     } else {
       this.iterator = null;
       return null;
@@ -74,17 +78,19 @@ FlatMapStep.FlatMapTraverserIterator = function(head, step, iterator) {
 };
 
 FlatMapStep.FlatMapTraverserIterator.prototype.next = function() {
-  console.log('==FlatMapTraverserIterator.next()==');
   var label = this.step.getLabel();
   var next = this.iterator.next();
-  var child = this.head.makeChild(label, next);
+  var element = next.value; // vertex, edge, etc.
+  var child;
+  var ret;
 
-  var ret = {
-    value: child,
-    done: next.done // equivalent to !!child
-  };
-
-  return ret;
+  if (!next.done) {
+    child = this.head.makeChild(label, element);
+    ret = { value: child, done: false };
+    return ret;
+  } else {
+    return next; // exit loop
+  }
 };
 
 

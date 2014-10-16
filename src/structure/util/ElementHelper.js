@@ -60,7 +60,6 @@ ElementHelper.attachProperties = function(element, properties) {
     }
 
   } else {
-    // console.log('@@@@@@@@@@@@@');
     // Attach properties from object/map
     for (propertyName in properties) {
       propertyValue = properties[propertyName];
@@ -70,8 +69,7 @@ ElementHelper.attachProperties = function(element, properties) {
 };
 
 ElementHelper.legalPropertyKeyValueArray = function(propertyKeyValues) {
-  // console.log(propertyKeyValues);
-
+  //todo: must implement this
 };
 
 

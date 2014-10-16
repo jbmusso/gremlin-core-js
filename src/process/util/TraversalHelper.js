@@ -10,8 +10,6 @@ function TraversalHelper() {
 
 
 TraversalHelper.isLabeled = function(step) {
-  // console.log('==TraversalHelper.isLabeled==');
-
   var label = _.isString(step) ? step : step.getLabel();
   var isLabeled = GraphKey.isHidden(label);
 
@@ -69,8 +67,6 @@ TraversalHelper.reLinkSteps = function(traversal) {
 };
 
 TraversalHelper.trackPaths = function(traversal) {
-  // console.log('==TraversalHelper.trackPaths()==');
-
   var steps = traversal.getSteps();
 
   var isEmpty = _lazy(steps)

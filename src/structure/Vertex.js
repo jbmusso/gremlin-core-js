@@ -41,10 +41,8 @@ Vertex.prototype.property = function(key, value, keyValues) {
       return VertexProperty.empty();
     }
   } else {
-    console.log('????????', key, value, keyValues);
-
     if (keyValues) {
-      // ElementHelper.legalPropertyKeyValueArray(keyValues);
+      // ElementHelper.legalPropertyKeyValueArray(keyValues); //todo: uncomment
       var vertexProperty = this.property(key, value);
       ElementHelper.attachProperties(vertexProperty, keyValues);
       return vertexProperty;
