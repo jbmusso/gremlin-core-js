@@ -6,7 +6,8 @@ require('es6-shim');
 var Traversal = require('../traversal');
 // var DefaultGraphTraversal = require('./util/defaultgraphtraversal');
 
-var VertexStep = require('../step/map/vertexstep');
+var PathStep = require('../step/map/pathstep');
+var VertexStep = require('../step/map/VertexStep');
 var Vertex = require('../../structure/vertex');
 var Edge = require('../../structure/edge');
 
@@ -144,6 +145,16 @@ GraphTraversal.prototype.bothE = function(edgeLabels) {
   }
 
   return this.toE.apply(this, toArguments);
+};
+
+// .......
+
+GraphTraversal.prototype.path = function(pathFunctions) { //...pathFunctions
+  if (arguments.length > 0) {
+    pathFunctions = [].slice.apply(arguments);
+  }
+
+  return this.addStep(new PathStep(this, pathFunctions));
 };
 
 module.exports = GraphTraversal;
