@@ -1,5 +1,7 @@
+require('es6-shim');
+
 function MultiIterator(limit) {
-  this.limit = limit || 9007199254740992;
+  this.limit = limit || Number.MAX_SAFE_INTEGER;
   this.iterators = [];
   this.current = 0;
   this.count = 0;
@@ -14,10 +16,7 @@ MultiIterator.prototype.next = function() {
   var cur;
 
   if (this.count >= this.limit) {
-    return {
-      value: undefined,
-      done: true
-    };
+    return { value: undefined, done: true };
   }
 
   currentIterator = this.iterators[this.current];
@@ -29,7 +28,6 @@ MultiIterator.prototype.next = function() {
       this.count++;
 
       return cur;
-
     } else {
       this.current++;
 
@@ -38,8 +36,6 @@ MultiIterator.prototype.next = function() {
       }
       currentIterator = this.iterators[this.current];
     }
-
-    return cur;
   }
   return {
     value: undefined,
