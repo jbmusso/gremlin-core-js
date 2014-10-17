@@ -8,6 +8,7 @@ var Traversal = require('../traversal');
 
 var VertexStep = require('../step/map/vertexstep');
 var Vertex = require('../../structure/vertex');
+var Edge = require('../../structure/edge');
 
 
 function GraphTraversal() { // interface
@@ -65,9 +66,7 @@ GraphTraversal.prototype.to = function(direction, branchFactor, edgeLabels) {
     branchFactor = Number.MAX_SAFE_INTEGER;
   }
 
-  var traversal = this.addStep(new VertexStep(this, Vertex, direction, branchFactor, edgeLabels));
-
-  return traversal;
+  return this.addStep(new VertexStep(this, Vertex, direction, branchFactor, edgeLabels));
 };
 
 GraphTraversal.prototype.out = function(edgeLabels) {
@@ -103,5 +102,48 @@ GraphTraversal.prototype.both = function(edgeLabels) {
   return this.to.apply(this, toArguments);
 };
 
+GraphTraversal.prototype.toE = function(direction, branchFactor, edgeLabels) {
+  if (_.isNumber(branchFactor)) {
+    edgeLabels = _.rest(arguments, 2);
+  } else {
+    edgeLabels = _.rest(arguments, 1);
+    branchFactor = Number.MAX_SAFE_INTEGER;
+  }
+
+  return this.addStep(new VertexStep(this, Edge, direction, branchFactor, edgeLabels));
+};
+
+GraphTraversal.prototype.outE = function(edgeLabels) {
+  var args = [].slice.apply(arguments);
+  var toArguments = ['out', Number.MAX_SAFE_INTEGER];
+
+  if (arguments.length > 0) {
+    toArguments = toArguments.concat(args);
+  }
+
+  return this.toE.apply(this, toArguments);
+};
+
+GraphTraversal.prototype.inE = function(edgeLabels) {
+  var args = [].slice.apply(arguments);
+  var toArguments = ['in', Number.MAX_SAFE_INTEGER];
+
+  if (arguments.length > 0) {
+    toArguments = toArguments.concat(args);
+  }
+
+  return this.toE.apply(this, toArguments);
+};
+
+GraphTraversal.prototype.bothE = function(edgeLabels) {
+  var args = [].slice.apply(arguments);
+  var toArguments = ['both', Number.MAX_SAFE_INTEGER];
+
+  if (arguments.length > 0) {
+    toArguments = toArguments.concat(args);
+  }
+
+  return this.toE.apply(this, toArguments);
+};
 
 module.exports = GraphTraversal;

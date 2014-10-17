@@ -22,7 +22,8 @@ function VertexStep(traversal, returnClass, direction, branchFactor, edgeLabels)
     });
   } else { // edges
     this.setFunction(function(traverser) {
-      return traverser.get().getIterators().edges(self.direction, self.branchFactor, self.edgeLabels);
+      var element = traverser.get();
+      return traverser.get().getIterators().edges(self.direction, self.branchFactor, self.edgeLabels, element);
     });
   }
 }
