@@ -71,30 +71,33 @@ GraphTraversal.prototype.to = function(direction, branchFactor, edgeLabels) {
 };
 
 GraphTraversal.prototype.out = function(edgeLabels) {
+  var args = [].slice.apply(arguments);
   var toArguments = ['out', Number.MAX_SAFE_INTEGER];
 
   if (arguments.length > 0) {
-    toArguments = toArguments.concat(arguments);
+    toArguments = toArguments.concat(args);
   }
 
   return this.to.apply(this, toArguments);
 };
 
 GraphTraversal.prototype.in = function(edgeLabels) {
+  var args = [].slice.apply(arguments);
   var toArguments = ['in', Number.MAX_SAFE_INTEGER];
 
   if (arguments.length > 0) {
-    toArguments = toArguments.concat(arguments);
+    toArguments = toArguments.concat(args);
   }
 
   return this.to.apply(this, toArguments);
 };
 
 GraphTraversal.prototype.both = function(edgeLabels) {
+  var args = [].slice.apply(arguments);
   var toArguments = ['both', Number.MAX_SAFE_INTEGER];
 
   if (arguments.length > 0) {
-    toArguments = toArguments.concat(arguments);
+    toArguments = toArguments.concat(args);
   }
 
   return this.to.apply(this, toArguments);
