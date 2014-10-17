@@ -1,4 +1,5 @@
-var _ = require('lazy.js');
+require('es6-shim');
+
 var Graph = {};
 
 Graph.System = function() {};
@@ -18,7 +19,7 @@ Graph.System.unSystem = function(key) {
 };
 
 Graph.System.isSystem = function(key) {
-  return _(key).startsWith(this.SYSTEM_PREFIX);
+  return key.startsWith(this.SYSTEM_PREFIX);
 };
 
 module.exports = Graph.System;
