@@ -13,19 +13,21 @@ MapStep.prototype.processNextStart = function() {
   var nextTraverser;
   var traverser;
   var end;
+  var value;
 
   while (true) {
     nextTraverser = this.starts.next();
 
     if (nextTraverser.done) {
-      return nextTraverser;
+      return nextTraverser; // exit
     }
 
     traverser = nextTraverser.value;
     end = this.fn(traverser);
 
     if (end) {
-      return { value: traverser.makeChild(this.getLabel(), end), done: false };
+      value = traverser.makeChild(this.getLabel(), end);
+      return { value: value, done: false };
     }
   }
 };

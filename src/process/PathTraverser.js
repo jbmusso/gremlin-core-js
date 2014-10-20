@@ -14,13 +14,13 @@ function PathTraverser(label, t, sideEffects) {
 
   } else if (_.isString(label)) {
     SimpleTraverser.call(this, t, sideEffects);
-    this.path = new ImmutablePath(new Set(), t);
+    this.path = new ImmutablePath(label, t);
   } else {
     sideEffects = t;
     t = label;
 
     SimpleTraverser.call(this, t, sideEffects);
-    this.path = new ImmutablePath(label, t);
+    this.path = new ImmutablePath(new Set(), t);
   }
 }
 
@@ -51,11 +51,15 @@ PathTraverser.prototype.makeChild = function(label, r) {
   traverser.t = this.t;
   traverser.sideEffects = this.sideEffects;
   traverser.loops = this.loops;
-  traverser.path = this.path.clone(); //bugged method?
+  traverser.path = this.path.clone().extend(label, r);
   traverser.future = this.future;
   traverser.bulk = this.bulk;
 
   return traverser;
+};
+
+PathTraverser.prototype.makeSibling = function() {
+  throw new Error('Must be implemented in PathTraverser class');
 };
 
 PathTraverser.prototype.deflate = function() {
