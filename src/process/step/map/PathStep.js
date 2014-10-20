@@ -10,7 +10,6 @@ var Path = require('../../Path');
 
 function PathStep(traversal, pathFunctions) { //...pathFunctions
   MapStep.call(this, traversal);
-  console.log(pathFunctions && pathFunctions.length === 0);
 
   var path;
   // if (pathFunctions)
@@ -35,7 +34,7 @@ function PathStep(traversal, pathFunctions) { //...pathFunctions
 }
 
 inherits(PathStep, MapStep); // extends
-_.extend(PathStep, PathConsumer); // implements
+_.extend(PathStep.prototype, PathConsumer.prototype); // implements
 
 
 module.exports = PathStep;
