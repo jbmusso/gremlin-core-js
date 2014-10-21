@@ -8,6 +8,7 @@ var Traversal = require('../traversal');
 
 var PathStep = require('../step/map/pathstep');
 var VertexStep = require('../step/map/VertexStep');
+var EdgeVertexStep = require('../step/map/EdgeVertexStep');
 var Vertex = require('../../structure/vertex');
 var Edge = require('../../structure/edge');
 
@@ -145,6 +146,22 @@ GraphTraversal.prototype.bothE = function(edgeLabels) {
   }
 
   return this.toE.apply(this, toArguments);
+};
+
+GraphTraversal.prototype.toV = function(direction) {
+  return this.addStep(new EdgeVertexStep(this, direction));
+};
+
+GraphTraversal.prototype.inV = function() {
+  return this.toV('in'); //todo: use Direction enum
+};
+
+GraphTraversal.prototype.outV = function() {
+  return this.toV('out'); //todo: use Direction enum
+};
+
+GraphTraversal.prototype.bothV = function() {
+  return this.toV('both'); //todo: use Direction enum
 };
 
 // .......
