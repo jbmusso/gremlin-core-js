@@ -60,45 +60,16 @@ AbstractStep.prototype.getLabel = function() {
  * todo: merge AbstractStep.next() with AbstractStep.hasNext()
  */
 AbstractStep.prototype.next = function() {
-  var next;
+  var nextTraverser = this.processNextStart();
 
-  if (this.hasNext()) {
-    if (this.available) {
-      this.available = false;
-
-      this.prepareTraversalForNextStep(this.nextEnd);
-      next = { value: this.nextEnd, done: false };
-      return next;
-    } else {
-      var nextTraverser = this.processNextStart();
-      this.prepareTraversalForNextStep(nextTraverser.value);
-
-      return nextTraverser;
-    }
-  } else {
-    return { value: undefined, done: true };
+  if (nextTraverser.done) {
+    return nextTraverser;
   }
-};
 
-/**
- * This method internally calls this.processNextStart() which returns a
- * { value: Traverser, done: Boolean } object.
- */
-AbstractStep.prototype.hasNext = function() {
-  if (this.available) {
-    return true;
-  } else {
-    var nextStart = this.processNextStart();
+  this.nextEnd = nextTraverser.value;
+  this.prepareTraversalForNextStep(this.nextEnd);
 
-    if (!nextStart.done) {
-      this.nextEnd = nextStart.value;
-      this.available = true;
-      return true;
-    } else {
-      this.available = false;
-      return false;
-    }
-  }
+  return { value: this.nextEnd, done: false };
 };
 
 AbstractStep.prototype.getTraversal = function() {
