@@ -164,14 +164,256 @@ GraphTraversal.prototype.bothV = function() {
   return this.toV('both'); //todo: use Direction enum
 };
 
-// .......
+GraphTraversal.prototype.otherV = function() {
+  throw new Error('Not yet implemented');
+};
 
-GraphTraversal.prototype.path = function(pathFunctions) { //...pathFunctions
-  if (arguments.length > 0) {
-    pathFunctions = [].slice.apply(arguments);
-  }
+GraphTraversal.prototype.order = function() {
+  throw new Error('Not yet implemented');
+};
 
-  return this.addStep(new PathStep(this, pathFunctions));
+GraphTraversal.prototype.orderBy = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.shuffle = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.properties = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.propertyMap = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.hiddens = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.hiddenMap = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.hiddenValueMap = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.hiddenValue = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.value = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.key = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.value = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.valueMap = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.values = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.path = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.back = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.match = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.select = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.union = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.intersect = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.unfold = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.fold = function() {
+  throw new Error('Not yet implemented');
+};
+
+
+///////////////////// FILTER STEPS /////////////////////
+
+GraphTraversal.prototype.filter = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.inject = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.dedup = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.except = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.where = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.has = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.hasNot = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.interval = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.random = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.range = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.retain = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.retain = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.simplePath = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.cyclicPath = function() {
+  throw new Error('Not yet implemented');
+};
+
+
+///////////////////// SIDE-EFFECT STEPS /////////////////////
+
+GraphTraversal.prototype.sideEffect = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.cap = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.count = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.subgraph = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.aggregate = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.groupBy = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.groupCount = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.addE = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.addInE = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.addOutE = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.addBothE = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.timeLimit = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.tree = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.store = function() {
+  throw new Error('Not yet implemented');
+};
+
+
+///////////////////// BRANCH STEPS /////////////////////
+
+GraphTraversal.prototype.branch = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.jump = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.until = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.choose = function() {
+  throw new Error('Not yet implemented');
+};
+
+
+///////////////////// UTILITY STEPS /////////////////////
+
+GraphTraversal.prototype.trackPaths = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.as = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.profile = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.remove = function() {
+  throw new Error('Not yet implemented');
+};
+
+GraphTraversal.prototype.with = function() {
+  throw new Error('Not yet implemented');
 };
 
 module.exports = GraphTraversal;
