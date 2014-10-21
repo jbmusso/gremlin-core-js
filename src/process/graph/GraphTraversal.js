@@ -9,6 +9,8 @@ var Traversal = require('../traversal');
 var PathStep = require('../step/map/pathstep');
 var VertexStep = require('../step/map/VertexStep');
 var EdgeVertexStep = require('../step/map/EdgeVertexStep');
+var CountStep = require('../step/sideEffect/CountStep');
+
 var Vertex = require('../../structure/vertex');
 var Edge = require('../../structure/edge');
 
@@ -327,7 +329,7 @@ GraphTraversal.prototype.cap = function() {
 };
 
 GraphTraversal.prototype.count = function() {
-  throw new Error('Not yet implemented');
+  return this.addStep(new CountStep(this));
 };
 
 GraphTraversal.prototype.subgraph = function() {

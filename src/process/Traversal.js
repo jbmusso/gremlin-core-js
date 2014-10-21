@@ -127,11 +127,11 @@ Traversal.SideEffects.prototype = {
     this.remove(GraphKey.hide('g'));
   },
 
-  getOrCreate: function(key, orCreate) {
+  getOrCreate: function(key, orCreateFunction) {
     if (this.exists(key)) {
       return this.get('key');
     } else {
-      var t = orCreate.get();
+      var t = orCreateFunction();
       this.set(key, t);
       return t;
     }
