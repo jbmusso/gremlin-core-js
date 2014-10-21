@@ -9,88 +9,64 @@ function Path() {
 }
 
 Path.prototype.size = function() {
-  return this.objects.length;
+  return new Error('Must be overloaded');
 };
 
-Path.prototype.add = function(label, object) {
-  var labels;
-
-  switch (label.constructor.name) {
-    case 'String':
-      labels = new Set();
-      if (TraversalHelper.isLabeled(label)) {
-        labels.add(label);
-      }
-      this.labels.push(labels);
-      this.objects.push(object);
-      break;
-    case 'Path':
-      this.labels.concat(path.labels);
-      this.objects.concat(path.objects);
-      break;
-    case 'Set':
-      //todo: refactor next 2 lines
-      set = new Set();
-      labels = lazy(Array.from(labels.values())).filter(TraversalHelper.isLabeled).forEach(set.add);
-
-      this.labels.push(set);
-      this.objects.push(object);
-      break;
-  }
-};
-
-Path.prototype.get = function(labelOrIndex) {
-  var label;
-  var index;
-
-  if (_.isString(labelOrIndex)) {
-    label = labelOrIndex;
-    for (var i = 0; i < this.labels.length; i++) {
-      if (this.labels[i].has(label)) {
-          return this.objects[i];
-      }
-    }
-    throw new Error('IllegalArgumentException("The step with label " + label + "  does not exist")');
-
-  } else { // is int
-    index = labelOrIndex;
-    return this.objects[index];
-  }
+Path.prototype.extend = function(labels, object) {
+  return new Error('Must be overloaded');
 };
 
 Path.prototype.hasLabel = function(label) {
-  var labels;
-  for (var i = 0; i < this.labels.length; i++) {
-    labels = this.labels[i];
-    if (labels.has(label)) {
-      return true;
-    }
-  }
-
-  return false;
+  return new Error('Must be overloaded');
 };
 
 Path.prototype.addLabel = function(label) {
-  if (TraversalHelper.isLabeled(label)) {
-    this.labels[this.labels.length - 1].add(label);
-  }
+  return new Error('Must be overloaded');
 };
 
 Path.prototype.getObjects = function() {
-  return this.objects;
+  return new Error('Must be overloaded');
 };
 
 Path.prototype.getLabels = function() {
-  var labelSets = [];
-  this.labels.forEach(function(set) {
-    labelSets.push(set);
+  return new Error('Must be overloaded');
+};
+
+Path.prototype.isSimple = function() {
+  return new Error('Must be overloaded');
+};
+
+Path.prototype.clone = function() {
+  return new Error('Must be overloaded');
+};
+
+Path.prototype.isSimple = function() {
+  var objects = this.getObjects();
+
+  for (var i = 0; i < objects.length; i++) {
+    for (var j = i + 1; j < objects.length; j++) {
+      if (objects[i].equals(objects[j])) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+Path.prototype.forEach = function(consumer) {
+  //todo: add logic for Java BiConsumer
+  return this.getObjects().forEach(consumer);
+};
+
+Path.prototype.stream = function() {
+  var labels = this.getLabels();
+  var objects = this.getObjects();
+
+  return lazy.range(0, this.size()).map(function(i) {
+    // todo: verify
+    return [labels[i], objects[i]];
   });
-
-  return labelSets;
 };
 
-Path.prototype.isSimple = function(first_argument) {
-  // body...
-};
 
 module.exports = Path;

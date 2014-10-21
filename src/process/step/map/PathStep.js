@@ -9,33 +9,35 @@ var Path = require('../../Path');
 
 
 function PathStep(traversal, pathFunctions) { //...pathFunctions
-  MapStep.call(this, traversal);
-  console.log(pathFunctions && pathFunctions.length === 0);
-
   var path;
-  // if (pathFunctions)
+
+  MapStep.call(this, traversal);
+
   this.functionRing = !pathFunctions ? null : new FunctionRing(pathFunctions);
 
+  var self = this;
   this.setFunction(function(traverser) {
-    var path = new Path();
-    if (!this.functionRing) {
+    if (!self.functionRing) {
       path = traverser.getPath();
-
-      console.log('======');
-      // path.add(traverser.getPath());
+      return path;
     } else {
-      // traverser.getPath().forEach(function(a, b) {
-      //   path.add(a, this.functionRing.next()(b));
-      //   this.functionRing.reset();
-      // });
+      path = MutablePath.make();
+      traverser.getPath().forEach(function(labels, object) {
+        path.extend(labels, self.functionRing.next()(object));
+      });
+      self.functionRing.reset();
+      return path;
     }
-
-    return path;
   });
 }
 
 inherits(PathStep, MapStep); // extends
-_.extend(PathStep, PathConsumer); // implements
+_.extend(PathStep.prototype, PathConsumer.prototype); // implements
+
+PathStep.prototype.reset = function() {
+  MapStep.prototype.reset.call(this);
+  this.functionRing.reset();
+};
 
 
 module.exports = PathStep;

@@ -37,7 +37,7 @@ SimpleTraverser.prototype.setFuture = function(label) {
 };
 
 SimpleTraverser.prototype.getPath = function() {
-  throw new Error('IllegalStateException(PATH_ERROR_MESSAGE)');
+  throw new Error('Path tracking is not supported by this Traverser: '+ this.constructor.name);
 };
 
 SimpleTraverser.prototype.setPath = function(path) {

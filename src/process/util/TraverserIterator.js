@@ -1,4 +1,6 @@
 var SimpleTraverser = require('../SimpleTraverser');
+var PathTraverser = require('../PathTraverser');
+
 
 
 function TraverserIterator(step, trackPaths, iterator) {

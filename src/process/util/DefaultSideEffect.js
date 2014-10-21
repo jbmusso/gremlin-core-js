@@ -1,12 +1,13 @@
 var inherits = require('util').inherits;
 
+require('es6-shim');
 var _ = require('lazy.js');
 
 var Traversal = require('../Traversal');
 
 
 function DefaultSideEffects(localVertex) {
-  this.sideEffectMap = {};
+  this.sideEffectMap = new Map();
 
   if (localVertex) {
     this.setLocalVertex(localVertex);
@@ -16,16 +17,17 @@ function DefaultSideEffects(localVertex) {
 inherits(DefaultSideEffects, Traversal.SideEffects);
 
 DefaultSideEffects.prototype.exists = function(key) {
-  return !!this.sideEffectMap[key];
+  var exists = this.sideEffectMap.has(key);
+
+  return exists;
 };
 
 DefaultSideEffects.prototype.set = function(key, value) {
-  // todo: validate key, value
-  this.sideEffectMap[key] = value;
+  this.sideEffectMap.set(key, value);
 };
 
 DefaultSideEffects.prototype.get = function(key) {
-  var value = this.sideEffectMap[key];
+  var value = this.sideEffectMap.get(key);
 
   if (!value) {
     throw new Error('SideEffectDoesNotExist' + key);
@@ -35,11 +37,11 @@ DefaultSideEffects.prototype.get = function(key) {
 };
 
 DefaultSideEffects.prototype.remove = function(key) {
-  delete this.sideEffectMap[key];
+  this.sideEffectMap.delete(key);
 };
 
 DefaultSideEffects.prototype.keys = function() {
-  return _(this.sideEffectMap).keys();
+  return this.sideEffectMap.keys();
 };
 
 DefaultSideEffects.prototype.setLocalVertex = function(vertex) {
@@ -47,7 +49,7 @@ DefaultSideEffects.prototype.setLocalVertex = function(vertex) {
   if (property.isPresent()) {
     this.sideEffectMap = property.value();
   } else {
-    this.sideEffectMap = {};
+    this.sideEffectMap = new Map();
     vertex.property('gremlin.traversalVertexProgram.sideEffects', this.sideEffectMap);
   }
 };

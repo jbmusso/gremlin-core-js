@@ -114,6 +114,9 @@ AbstractStep.prototype.processNextStart = function() {
 };
 
 AbstractStep.prototype.prepareTraversalForNextStep = function(traverser) {
+  var path;
+  var element;
+
   if (!traverser) {
     throw new Error('Traverser cannot be undefined');
   }
@@ -127,11 +130,13 @@ AbstractStep.prototype.prepareTraversalForNextStep = function(traverser) {
   }
 
   if (traverser instanceof PathTraverser) {
-    traverser.getPath().addLabel(this.getLabel());
+    path = traverser.getPath();
+    path.addLabel(this.getLabel());
   }
 
   if (TraversalHelper.isLabeled(this.label)) {
-    this.traversal.getSideEffects().set(this.label, traverser.get());
+    element = traverser.get();
+    this.traversal.getSideEffects().set(this.label, element);
   }
 };
 
