@@ -2,8 +2,8 @@ var inherits = require('util').inherits;
 
 var _ = require('lodash');
 
-var DefaultTraversal = require('../../util/defaulttraversal');
-var GraphTraversal = require('../graphtraversal');
+var DefaultTraversal = require('../../util/DefaultTraversal');
+var GraphTraversal = require('../GraphTraversal');
 
 
 function DefaultGraphTraversal(graph) {

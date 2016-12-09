@@ -1,6 +1,6 @@
 var inherits = require('util').inherits;
 
-var Element = require('./element');
+var Element = require('./Element');
 
 
 function Edge(id, graph) {

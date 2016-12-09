@@ -1,9 +1,9 @@
 var inherits = require('util').inherits;
 
-var Step = require('../step');
-var EmptyStep = require('./emptystep');
+var Step = require('../Step');
+var EmptyStep = require('./EmptyStep');
 
-var ExpandableStepIterator = require('./expandablestepiterator');
+var ExpandableStepIterator = require('./ExpandableStepIterator');
 var PathTraverser = require('../PathTraverser');
 var TraversalHelper = require('./TraversalHelper');
 

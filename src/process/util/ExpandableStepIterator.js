@@ -2,7 +2,7 @@ var inherits = require('util').inherits;
 
 var forOf = require('es6-iterator/for-of');
 
-var TraverserSet = require('./traverserset');
+var TraverserSet = require('./TraverserSet');
 
 
 function ExpandableStepIterator(hostStep) {

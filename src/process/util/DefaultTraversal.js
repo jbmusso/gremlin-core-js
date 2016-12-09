@@ -1,9 +1,9 @@
 var inherits = require('util').inherits;
 
-var Traversal = require('../traversal');
-var TraversalHelper = require('./traversalhelper');
-var DefaultStrategies = require('./defaultstrategies');
-var DefaultSideEffects = require('./defaultsideeffect');
+var Traversal = require('../Traversal');
+var TraversalHelper = require('./TraversalHelper');
+var DefaultStrategies = require('./DefaultStrategies');
+var DefaultSideEffects = require('./DefaultSideEffect');
 
 var TraverserSourceStrategy = require('../graph/strategy/TraverserSourceStrategy');
 var LabeledEndStepStrategy = require('../graph/strategy/LabeledEndStepStrategy');

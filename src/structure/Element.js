@@ -1,5 +1,5 @@
-var Property = require('./property');
-var GraphKey = require('./Graph.Key');
+var Property = require('./Property');
+var GraphKey = require('./graph.key');
 
 var StreamFactory = require('../util/streamfactory');
 

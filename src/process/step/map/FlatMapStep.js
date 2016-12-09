@@ -1,6 +1,6 @@
 var inherits = require('util').inherits;
 
-var AbstractStep = require('../../util/abstractstep');
+var AbstractStep = require('../../util/AbstractStep');
 
 function FlatMapStep(traversal) {
   this.fn = null;

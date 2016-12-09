@@ -2,10 +2,10 @@
 var inherits = require('util').inherits;
 var _ = require('underscore');
 
-var Element = require('./element');
-var GraphKey = require('./Graph.Key');
-var VertexTraversal = require('../process/graph/vertextraversal');
-var ElementHelper = require('./util/elementhelper');
+var Element = require('./Element');
+var GraphKey = require('./graph.key');
+var VertexTraversal = require('../process/graph/VertexTraversal');
+var ElementHelper = require('./util/ElementHelper');
 
 function Vertex() {
 }

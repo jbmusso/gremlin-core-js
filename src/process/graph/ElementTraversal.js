@@ -1,6 +1,6 @@
 var _ = require('lodash');
 
-var GraphTraversal = require('./graphtraversal');
+var GraphTraversal = require('./GraphTraversal');
 
 
 function ElementTraversal() { // extends/implements nothing
