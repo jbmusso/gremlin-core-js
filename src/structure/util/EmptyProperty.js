@@ -1,6 +1,6 @@
 var inherits = require('util').inherits;
 
-var Property = require('../property');
+var Property = require('../Property');
 
 
 function EmptyProperty() {

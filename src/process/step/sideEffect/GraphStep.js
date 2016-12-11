@@ -2,10 +2,10 @@ var inherits = require('util').inherits;
 
 var _ = require('lodash');
 
-var StartStep = require('./startstep');
-var TraverserSource = require('../../graph/marker/traversersource');
-var Vertex = require('../../../structure/vertex');
-var Edge = require('../../../structure/edge');
+var StartStep = require('./StartStep');
+var TraverserSource = require('../../graph/marker/TraverserSource');
+var Vertex = require('../../../structure/Vertex');
+var Edge = require('../../../structure/Edge');
 
 function GraphStep(traversal, returnClass) {
   StartStep.call(this, traversal, returnClass);

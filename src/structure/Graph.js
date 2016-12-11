@@ -1,7 +1,7 @@
 var _ = require('lazy.js');
 
-var Vertex = require('./vertex');
-var Edge = require('./edge');
+var Vertex = require('./Vertex');
+var Edge = require('./Edge');
 
 
 function Graph() {

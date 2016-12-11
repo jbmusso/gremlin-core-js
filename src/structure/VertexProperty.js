@@ -2,9 +2,9 @@ var inherits = require('util').inherits;
 
 var _ = require('lodash');
 
-var Property = require('./property');
-var Element = require('./element');
-var VertexPropertyTraversal = require('../process/graph/vertexpropertytraversal');
+var Property = require('./Property');
+var Element = require('./Element');
+var VertexPropertyTraversal = require('../process/graph/VertexPropertyTraversal');
 
 var EmptyVertexProperty = require('./util/EmptyVertexProperty');
 

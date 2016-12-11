@@ -1,6 +1,6 @@
 var inherits = require('util').inherits;
 
-var Step = require('../step');
+var Step = require('../Step');
 var Traverser = require('../Traverser');
 
 function EmptyStep(argument) {

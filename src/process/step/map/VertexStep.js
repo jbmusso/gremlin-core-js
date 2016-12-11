@@ -1,7 +1,7 @@
 var inherits = require('util').inherits;
 
-var FlatMapStep = require('./flatmapstep');
-var Vertex = require('../../../structure/vertex');
+var FlatMapStep = require('./FlatMapStep');
+var Vertex = require('../../../structure/Vertex');
 
 
 function VertexStep(traversal, returnClass, direction, branchFactor, edgeLabels) {

@@ -1,10 +1,10 @@
 var inherits = require('util').inherits;
 
 var forOf = require('es6-iterator/for-of');
-var Graph = require('../structure/graph');
+var Graph = require('../structure/Graph');
 var GraphKey = require('../structure/graph.key');
 
-var TraversalHelper = require('./util/traversalhelper');
+var TraversalHelper = require('./util/TraversalHelper');
 
 
 function Traversal() {

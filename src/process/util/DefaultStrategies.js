@@ -2,7 +2,7 @@ var inherits = require('util').inherits;
 
 var _ = require('lazy.js');
 
-var Traversal = require('../traversal');
+var Traversal = require('../Traversal');
 
 
 function DefaultStrategies(traversal) {

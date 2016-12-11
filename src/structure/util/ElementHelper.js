@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 var GraphSystem = require('../graph.system');
-var T = require('../../process/t');
+var T = require('../../process/T');
 
 
 function ElementHelper() {

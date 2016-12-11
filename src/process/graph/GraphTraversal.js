@@ -3,16 +3,16 @@ var inherits = require('util').inherits;
 var _ = require('lodash');
 require('es6-shim');
 
-var Traversal = require('../traversal');
+var Traversal = require('../Traversal');
 // var DefaultGraphTraversal = require('./util/defaultgraphtraversal');
 
-var PathStep = require('../step/map/pathstep');
+var PathStep = require('../step/map/PathStep');
 var VertexStep = require('../step/map/VertexStep');
 var EdgeVertexStep = require('../step/map/EdgeVertexStep');
 var CountStep = require('../step/sideEffect/CountStep');
 
-var Vertex = require('../../structure/vertex');
-var Edge = require('../../structure/edge');
+var Vertex = require('../../structure/Vertex');
+var Edge = require('../../structure/Edge');
 
 
 function GraphTraversal() { // interface
@@ -21,7 +21,7 @@ function GraphTraversal() { // interface
 inherits(GraphTraversal, Traversal); // extends
 
 GraphTraversal.of = function(graph) {
-  var DefaultGraphTraversal = require('./util/defaultgraphtraversal');
+  var DefaultGraphTraversal = require('./util/DefaultGraphTraversal');
   var traversal = new DefaultGraphTraversal(); //todo: resolve loop require'ing
 
   if (graph) {

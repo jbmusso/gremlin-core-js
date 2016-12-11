@@ -1,6 +1,6 @@
 var inherits = require('util').inherits;
 
-var ElementTraversal = require('./elementtraversal');
+var ElementTraversal = require('./ElementTraversal');
 
 function VertexTraversal() { // abstract interface
 }
